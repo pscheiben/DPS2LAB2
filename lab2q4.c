@@ -1,6 +1,7 @@
 
     //***************************************************************************************
-    //  Description:  Software to demonstrate interrupt based digital input on               //                push buttons on P5.6
+    //  Description:  Software to demonstrate interrupt based digital input on push button on P5.6
+    //Lab Question 4. Change the above code so that LED 1 toggles when switch S2 is released (instead of when S1 is pressed) using an interrupt
     //****************************************************************************
     #include <msp430.h>
 
@@ -9,7 +10,7 @@
         volatile long int i=0;
 
         // Stop WDT
-        WDTCTL = WDTPW + WDTHOLD;
+        WDTCTL = WDTPW + WDTHOLD;   // stop watchdog clk
         PM5CTL0 &= ~LOCKLPM5;       // Disable the GPIO power-on default high-impedance mode
 
         // Configure input/output pins
@@ -22,20 +23,20 @@
         P1SEL1 = P1SEL1 & ~BIT1;  //GPIO
         P1DIR = P1DIR | BIT1;  //output
         // Setup P5.6 as an input port (for SW1)
-        P5SEL0 = P5SEL0 & ~BIT6;  //GPIO
-        P5SEL1 = P5SEL1 & ~BIT6; //GPIO
-        P5DIR = P5DIR & ~BIT6; //input
+        P5SEL0 = P5SEL0 & ~BIT5;  //GPIO
+        P5SEL1 = P5SEL1 & ~BIT5; //GPIO
+        P5DIR = P5DIR & ~BIT5; //input
         // Enable the internal pull resistor and set as a pullup
-        P5REN = P5REN | BIT6;  //enable internal pull resistor
-        P5OUT = P5OUT | BIT6;  //selects to pull UP
+        P5REN = P5REN | BIT5;  //enable internal pull resistor
+        P5OUT = P5OUT | BIT5;  //selects to pull UP
 
         // Set-up the interrupt for P5.6 (SW1)
-        // P5.6 Hi/lo edge (falling edge)
-        P5IES |= BIT6;
+        // P5.6 Hi/lo edge (rising edge)
+        P5IES &= ~BIT5;
         // P5.6 IFG cleared
-        P5IFG &= ~BIT6;
+        P5IFG &= ~BIT5;
         // P5.6 Interrupt Enable
-        P5IE |= BIT6;
+        P5IE |= BIT5;
 
         // Enable interrupts globally. This sets GIE bit
         _EINT();
@@ -57,6 +58,6 @@
      // toggle LED 1 (P1.0)
      P1OUT ^= BIT0;
      // interrupt serviced, clear P5.6 interrupt flag
-     P5IFG &= ~BIT6;
+     P5IFG &= ~BIT5;
     }
 
