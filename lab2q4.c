@@ -1,7 +1,8 @@
 
     //***************************************************************************************
     //  Description:  Software to demonstrate interrupt based digital input on push button on P5.6
-    //Lab Question 4. Change the above code so that LED 1 toggles when switch S2 is released (instead of when S1 is pressed) using an interrupt
+    //  Lab Question 4. Change the above code so that LED 1 toggles when switch S2 is released (instead of when S1 is pressed) using an interrupt
+    //  Implemented on MSP-EXP430FR5994     
     //****************************************************************************
     #include <msp430.h>
 
