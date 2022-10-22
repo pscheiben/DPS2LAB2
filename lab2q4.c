@@ -1,7 +1,7 @@
 
     //***************************************************************************************
-    //  Description:  Software to demonstrate interrupt based digital input on push button on P5.6
-    //  Lab Question 4. Change the above code so that LED 1 toggles when switch S2 is released (instead of when S1 is pressed) using an interrupt
+    //  Description:  Software to demonstrate interrupt based digital input on push button on P5.5
+    //  Lab Question 4. Change the above code so that LED 1 toggles when switch S2(P5.5) is released (instead of when S1 is pressed) using an interrupt
     //  Implemented on MSP-EXP430FR5994     
     //****************************************************************************
     #include <msp430.h>
@@ -23,7 +23,7 @@
         P1SEL0 = P1SEL0 & ~BIT1;  //GPIO
         P1SEL1 = P1SEL1 & ~BIT1;  //GPIO
         P1DIR = P1DIR | BIT1;  //output
-        // Setup P5.6 as an input port (for SW1)
+        // Setup P5.5 as an input port (for SW2)
         P5SEL0 = P5SEL0 & ~BIT5;  //GPIO
         P5SEL1 = P5SEL1 & ~BIT5; //GPIO
         P5DIR = P5DIR & ~BIT5; //input
@@ -31,12 +31,12 @@
         P5REN = P5REN | BIT5;  //enable internal pull resistor
         P5OUT = P5OUT | BIT5;  //selects to pull UP
 
-        // Set-up the interrupt for P5.6 (SW1)
-        // P5.6 Hi/lo edge (rising edge)
+        // Set-up the interrupt for P5.5 (SW2)
+        // P5.5 Hi/lo edge (rising edge)
         P5IES &= ~BIT5;
-        // P5.6 IFG cleared
+        // P5.5 IFG cleared
         P5IFG &= ~BIT5;
-        // P5.6 Interrupt Enable
+        // P5.5 Interrupt Enable
         P5IE |= BIT5;
 
         // Enable interrupts globally. This sets GIE bit
@@ -58,7 +58,7 @@
     {
      // toggle LED 1 (P1.0)
      P1OUT ^= BIT0;
-     // interrupt serviced, clear P5.6 interrupt flag
+     // interrupt serviced, clear P5.5 interrupt flag
      P5IFG &= ~BIT5;
     }
 
