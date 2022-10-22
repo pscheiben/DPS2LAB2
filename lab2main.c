@@ -1,6 +1,7 @@
 
     //***************************************************************************************
-    //  Description:  Software to demonstrate interrupt based digital input on  push buttons on P5.6                
+    //  Description:  Software to demonstrate interrupt based digital input on  push buttons on P5.6 
+    //  Implemented on MSP-EXP430FR5994               
     //****************************************************************************
     #include <msp430.h>
 
